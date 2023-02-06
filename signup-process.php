@@ -9,10 +9,10 @@ if (! filter_var($_POST["email"],FILTER_VALIDATE_EMAIL)) {
 }
 
 if (strlen($_POST["password"]) < 5) {
-    die ("Short passwort (less 5 symbols");
+    die ("Short passwort (less 5 symbols)");
 }
 
-function validation ($str) {
+function validation ($password) {
     $numbers = [
         0 => "0",
         1 => "1",
@@ -28,7 +28,7 @@ function validation ($str) {
     ];
     $i = 0;
     while ($i < 10) {
-        if(strpos($str, $numbers[$i])) {
+        if(strpos($password, $numbers[$i])) {
             return $_POST["password"];
         } 
         $i++;
@@ -40,5 +40,6 @@ validation($_POST["password"]);
 
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
  
+
 
 echo "failed";
