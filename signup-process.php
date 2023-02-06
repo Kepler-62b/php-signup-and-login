@@ -38,8 +38,48 @@ function validation ($password) {
 
 validation($_POST["password"]);
 
+if (empty($_POST["password_confirmation"])) {
+    die ("Field PASSWORD CONFIRMATION is requierd");
+} elseif ($_POST["password"] !== $_POST["password_confirmation"]) {
+    die ("Field PASSWORD CONFIRMATION do not match");
+}
+
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
  
+require __DIR__ . "/base-connect.php";
+
+    // var_dump($mysqli);
+
+    // теперь нам нужно получить объект mysqli_stmt
+    // есть несколько методов, которые возвращают объект mysqli_stmt
+
+// $stmt = $mysqli->stmt_init(); // возращает в переменную $stmt объект mysqli_stmt
+
+    // var_dump($stmt);
 
 
-echo "failed";
+$stmt_prepare = $mysqli->prepare("INSERT INTO user (name, email, password_hash) VALUES (?, ?, ?)");
+
+    var_dump($stmt_prepare);
+
+if (! $stmt_prepare) {
+    die ('SQL error:' . $mysqli->error);
+}
+
+    var_dump($stmt_prepare->bind_param("sss", $_POST["name"], $_POST["email"], $password_hash));
+
+if ($stmt_prepare->execute()) {
+    header ('Location: signup-success.html');    
+} 
+else {
+    if ($mysqli->errno === 1062) {
+        die ('email already taken');
+    } else {
+        die($mysqli->error . " " . $mysqli->errno);
+    }
+}
+
+
+
+
+
