@@ -53,19 +53,17 @@ require __DIR__ . "/base-connect.php";
     // теперь нам нужно получить объект mysqli_stmt
     // есть несколько методов, которые возвращают объект mysqli_stmt
 
-// $stmt = $mysqli->stmt_init(); // возращает в переменную $stmt объект mysqli_stmt
-
+    // 1. через stmt_init - возращает mysqli_stmt
+// $stmt = $mysqli->stmt_init(); 
     // var_dump($stmt);
 
-
+    // 2. через prepare - возращает mysqli_stmt
 $stmt_prepare = $mysqli->prepare("INSERT INTO user (name, email, password_hash) VALUES (?, ?, ?)");
-
     var_dump($stmt_prepare);
 
 if (! $stmt_prepare) {
     die ('SQL error:' . $mysqli->error);
 }
-
     var_dump($stmt_prepare->bind_param("sss", $_POST["name"], $_POST["email"], $password_hash));
 
 if ($stmt_prepare->execute()) {

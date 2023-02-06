@@ -7,8 +7,8 @@ $mysqli = new mysqli ("127.0.0.1", "root", null, "login_db");
 if ($mysqli->connect_errno) {
     die ("Error code: $mysqli->connect_errno. <br>Error massage: $mysqli->connect_error");
 }
-
-return $mysql;
+var_dump($mysqli);
+return $mysqli;
 
 
 
