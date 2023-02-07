@@ -19,13 +19,18 @@ session_start();
     <?php
         $username = ucfirst($_SESSION["user_name"]);
 
-        if (isset($username)) {
+        if (isset($_SESSION["user_id"])) {
             print("<h1>Home page</h1>");
             print("<p>Welcome {$username}.</p>");
+            print("<p><a href='logout-process.php'>Log out</a>.</p>");
+
+        } else {
+            print("<h1>Home page</h1>");
+            print("<p>You must <a href='signup-forms.html'>Sign up</a> or <a href='login-process.php'>Log in</a>.</p>");
+
+
         }
     ?>
-
-    <p><a href="logout-process.php">Log out</a>.</p>
 </head>
 
 <body>
